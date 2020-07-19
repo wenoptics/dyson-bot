@@ -44,3 +44,75 @@ git clone -b melodic-devel https://github.com/ROBOTIS-GIT/turtlebot3.git
 git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 cd ${_cws} && catkin_make
 ```
+
+## Simulation with gazebo
+
+- Specify turtlebot model
+
+    ```bash
+    export TURTLEBOT3_MODEL='burge'
+    # or
+    export TURTLEBOT3_MODEL='waffle'
+    # or
+    export TURTLEBOT3_MODEL='waffle_pi'
+    ```
+
+- Launch Gazebo preset:
+
+    ```bash
+    roslaunch turtlebot3_gazebo <preset.launch>
+    # e.g.
+    roslaunch turtlebot3_gazebo turtlebot3_world.launch
+    ```
+
+    - Gazebo presets (environments)
+    
+        |             |                                 |
+        |-------------|---------------------------------|
+        | Empty World | `turtlebot3_empty_world.launch` |
+        | World       | `turtlebot3_world.launch`       |
+        | House       | `turtlebot3_house.launch`       |
+    
+- Drive
+
+    - with teleop:
+    
+        ```bash
+        roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+        ```
+    
+    - or demo collision avoidance with `turtlebot3_simulation`
+
+        ```bash
+        roslaunch turtlebot3_gazebo turtlebot3_simulation.launch
+        ```
+
+## Nav and SLAM in simulation
+
+Refers to [Turtlebot3 SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#ros-1-slam) and [Turtlebot3 Navigation](https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#ros-1-navigation)
+
+
+- SLAM 
+
+    - SLAM Method - gmapping
+    
+        ```bash
+        roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+        ```
+        
+        All methods: gmapping, cartographer, hector, karto, frontier_exploration
+
+    - Save Map
+        
+        ```bash
+        export MAP_FILE=$HOME/projects/dyson-bot/map/map_test
+        rosrun map_server map_saver -f $MAP_FILE
+        ```
+
+- Navigation
+
+    - Launch Navigation Node
+        ```bash
+        roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$MAP_FILE.yaml
+        ```
+
