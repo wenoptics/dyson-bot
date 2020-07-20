@@ -47,7 +47,7 @@ catkin_init_workspace
 cd catkin_ws
 catkin_make
 ```
- 
+
 
 ### Setup catkin workspace
 
